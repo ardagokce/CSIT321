@@ -1,0 +1,65 @@
+!     Declare an array of integers and initialize
+
+      integer, parameter ::  lenarray = 8
+      integer, DIMENSION(lenarray) :: array
+      array= (/25, 57, 48, 37, 12, 92, 86, 33/)
+
+
+
+      write(*,501)
+ 501  format(' Before sorting:')
+
+      do  i = 1, lenarray, 4
+!       Print the numbers four to a line
+!       Continue the statement on the next line
+        write(*, 502) array(i), array(i+1), array(i+2),  array(i+3)
+
+!       Print a two-digit integer and 4 blanks 4 times
+ 502    format(' ', 4(i2, 4x))
+        end do
+
+      call bubble(array, lenarray)
+
+      write(*,503)
+ 503  format(' After sorting:')
+
+      do i = 1, lenarray, 4
+        write(*, 502) array(i), array(i+1), array(i+2), array(i+3)
+      end do
+
+      end
+
+
+
+      subroutine bubble(x, n)
+      integer x(n), n, j, pass
+      logical :: switch = .true.
+
+      pass = 1
+  201 if ((pass.lt.n).and.switch) then
+
+       switch = .false.
+!
+        do  j = 1, n-pass
+          if (x(j) .gt. x(j+1)) then
+            switch = .true.
+            call swap(x(j), x(j+1))
+          endif
+        end do
+        pass = pass + 1
+        go to 201
+      endif
+
+      return
+      end
+!
+!
+!     All parameter passing is by reference
+!
+      subroutine swap(i, j)
+       integer i, j, temp
+       temp = i
+       i = j
+       j = temp
+       return
+      end
